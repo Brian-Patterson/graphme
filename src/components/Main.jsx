@@ -9,7 +9,7 @@ const Main = () => {
                 <Outlet />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/items" element={<Inventory />} />
+                    <Route path="/items/:inventory" element={<Inventory />} />
                 </Routes>
             </main>
         </>

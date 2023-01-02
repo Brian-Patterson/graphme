@@ -5,13 +5,14 @@ import {useParams} from 'react-router'
 const Inventory = (props) => {
     const [items, setItems] = useState({})
     const {inventory} = useParams()
+    console.log (inventory)
 
     const getItems = async () => {
         try {
-          const response = await fetch(`/items/${inventory}`);
+          const response = await fetch(`/items/${items.inventory}`);
           const allItems = await response.json();
           setItems(allItems);
-          console.log('frontend: ' + items);
+          console.log('frontend: ' + items.inventory);
         } catch (err) {
           console.log(err);
         }

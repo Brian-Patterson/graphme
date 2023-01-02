@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 const Home = (props) => {
+  let navigate = useNavigate()
   const [questionaire, setQuestionaire] = useState([]);
 
   const getInventories = async () => {
@@ -9,11 +10,19 @@ const Home = (props) => {
       const response = await fetch("/inventories");
       const allInventories = await response.json();
       setQuestionaire(allInventories);
-      console.log(questionaire);
+      console.log(questionaire.inventories);
     } catch (err) {
       console.log(err);
     }
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    navigate(`items/${e.target.firstChild.value}`)
+    console.log(e)
+    console.log(e.target[0].firstChild)
+    console.log(e.target.firstChild.value)
+  }
 
   useEffect(() => {
     getInventories();
@@ -22,16 +31,14 @@ const Home = (props) => {
   return (
     <div className="App">
       {questionaire ? (
-        questionaire.inventories?.map((inventory, i) => 
-          <form>
-            <Link to={'/items'}>
+        questionaire.inventories?.map((inventory, idx) => 
+          <form onSubmit={handleSubmit}>
               <input
-                type="button"
-                key={i}
+                type="submit"
+                key={idx}
                 value={inventory}
                 id={inventory}
                 />
-              </Link>
           </form>)
       ) : (
         <p>Loading...</p>
