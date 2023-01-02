@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet } from 'react-router-dom'
 import Home from '../pages/Home'
+import Inventory from '../pages/Inventory'
 
 const Main = () => {
     return (
@@ -8,6 +9,7 @@ const Main = () => {
                 <Outlet />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/items" element={<Inventory />} />
                 </Routes>
             </main>
         </>
