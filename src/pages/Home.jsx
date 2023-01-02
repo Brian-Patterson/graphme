@@ -19,9 +19,6 @@ const Home = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     navigate(`items/${e.target.firstChild.value}`)
-    console.log(e)
-    console.log(e.target[0].firstChild)
-    console.log(e.target.firstChild.value)
   }
 
   useEffect(() => {
@@ -29,7 +26,7 @@ const Home = (props) => {
   }, []);
 
   return (
-    <div className="App">
+    <div className="Home">
       {questionaire ? (
         questionaire.inventories?.map((inventory, idx) => 
           <form onSubmit={handleSubmit}>
