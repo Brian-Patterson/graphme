@@ -5,8 +5,8 @@ import {useParams} from 'react-router'
 const Inventory = (props) => {
     const [items, setItems] = useState({})
     const [int, setInt] = useState(0)
-    const [results, setResults] = useState([])
-
+    const [answers, setAnswers] = useState([])
+    console.log(answers)
     const {inventory} = useParams()
 
     const getItems = async () => {
@@ -26,19 +26,22 @@ const Inventory = (props) => {
       const handleSubmit = (e) => {
         e.preventDefault()
         setInt(int+1)
-        console.log(e.target.length)
+        let selected = ""
         for (let i=0; i<=6; i++){
             if (e.target[i].checked === true){
+                selected = e.target[i].defaultValue
                 e.target[i].checked = false
             }
         }
+        console.log(answers)
+        setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
+        console.log(answers)
       }
 
       return (
         <div className="Inventory">
             <h3>{items.inventory}</h3>
             {items.items ? (
-                // items.items?.map((question, i) => <p key = {i}>{question}</p>)
                 <div>
                     <p>{items.items[int]}</p>
                     <form onSubmit={handleSubmit}>
