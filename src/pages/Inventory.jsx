@@ -1,13 +1,15 @@
 import {React, useState, useEffect} from 'react'
 import {useParams} from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 
 const Inventory = (props) => {
     const [items, setItems] = useState({})
     const [int, setInt] = useState(0)
     const [answers, setAnswers] = useState([])
-    console.log(answers)
+
     const {inventory} = useParams()
+    let navigate = useNavigate()
 
     const getItems = async () => {
         try {
@@ -33,10 +35,12 @@ const Inventory = (props) => {
                 e.target[i].checked = false
             }
         }
-        console.log(answers)
         setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
-        console.log(answers)
+        if(int === items.items.length-1){
+            navigate('/results')
+        }
       }
+      console.log(items.items)
 
       return (
         <div className="Inventory">
