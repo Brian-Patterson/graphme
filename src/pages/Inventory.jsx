@@ -5,16 +5,15 @@ import {useParams} from 'react-router'
 const Inventory = (props) => {
     const [items, setItems] = useState({})
     const [int, setInt] = useState(0)
-    const [questionaire, setQuestionaire] = useState([])
+    const [results, setResults] = useState([])
+
     const {inventory} = useParams()
-    console.log (inventory)
 
     const getItems = async () => {
         try {
           const response = await fetch(`/items/${inventory}`);
           const allItems = await response.json()
           setItems(allItems)
-          console.log(items)
         } catch (err) {
           console.log(err);
         }
@@ -24,22 +23,25 @@ const Inventory = (props) => {
         getItems();
       }, []);
 
-      const loading = () => {
-        <div>
-            <p>{items.items[int]}</p>
-            <button onClick={() => setInt(int + 1)}>Next Question</button>
-        </div>
+      const handleSubmit = (e) => {
+        e.preventDefault()
+        setInt(int+1)
+        console.log(e.target.length)
+        for (let i=0; i<=6; i++){
+            if (e.target[i].checked === true){
+                e.target[i].checked = false
+            }
+        }
       }
 
       return (
         <div className="Inventory">
             <h3>{items.inventory}</h3>
-            <button onClick={() => setInt(int + 1)}>Next Question</button>
             {items.items ? (
                 // items.items?.map((question, i) => <p key = {i}>{question}</p>)
                 <div>
                     <p>{items.items[int]}</p>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <input 
                             type='radio'
                             id="strAgr"
@@ -89,6 +91,7 @@ const Inventory = (props) => {
                             name='scaled-response'
                         />
                         <label for='strDisa'>Strongly Disagree</label> 
+                        <input type="submit" value="Next Question" />
                     </form>
                 </div>
                 
