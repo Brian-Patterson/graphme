@@ -40,7 +40,7 @@ const Inventory = (props) => {
             navigate('/results')
         }
       }
-      console.log(items.items)
+      
 
       return (
         <div className="Inventory">
@@ -54,6 +54,7 @@ const Inventory = (props) => {
                             id="strAgr"
                             value="strongly agree"
                             name='scaled-response'
+                            required
                         />
                         <label for="strArg">Strongly Agree</label>
                         <input 
