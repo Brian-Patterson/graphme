@@ -3,7 +3,7 @@ import {useParams} from 'react-router'
 import { useNavigate } from 'react-router-dom'
 
 
-const Inventory = (props) => {
+const Inventory = ({onScore}) => {
     const [items, setItems] = useState({})
     const [int, setInt] = useState(0)
     const [answers, setAnswers] = useState([])
@@ -22,8 +22,7 @@ const Inventory = (props) => {
       };
     
       useEffect(() => {
-        getItems();
-      }, []);
+        getItems()}, []);
 
       const handleSubmit = (e) => {
         e.preventDefault()
@@ -36,7 +35,9 @@ const Inventory = (props) => {
             }
         }
         setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
+        console.log(answers)
         if(int === items.items.length-1){
+            onScore(answers)
             navigate('/results')
         }
       }
