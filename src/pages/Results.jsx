@@ -20,8 +20,6 @@ function Results(score) {
     useEffect (() => {
         getScores()}, [])
 
-    console.log(score)
-
   return (
     <div>
         <h2>Results: </h2>

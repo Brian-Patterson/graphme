@@ -7,6 +7,7 @@ const Inventory = ({onScore}) => {
     const [items, setItems] = useState({})
     const [int, setInt] = useState(0)
     const [answers, setAnswers] = useState([])
+    const [totalAnswers, setTotalAnswers] = useState({})
 
     const {inventory} = useParams()
     let navigate = useNavigate()
@@ -35,8 +36,12 @@ const Inventory = ({onScore}) => {
             }
         }
         setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
+        setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
         console.log(answers)
+        console.log(totalAnswers)
         if(int === items.items.length-1){
+            setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
+            setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
             onScore(answers)
             navigate('/results')
         }
