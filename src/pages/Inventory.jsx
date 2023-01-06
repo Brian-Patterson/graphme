@@ -7,7 +7,7 @@ const Inventory = ({onScore}) => {
     const [items, setItems] = useState({})
     const [int, setInt] = useState(0)
     const [answers, setAnswers] = useState([])
-    const [totalAnswers, setTotalAnswers] = useState({})
+    const [totalAnswers, setTotalAnswers] = useState({answers})
 
     const {inventory} = useParams()
     let navigate = useNavigate()
@@ -35,18 +35,22 @@ const Inventory = ({onScore}) => {
                 e.target[i].checked = false
             }
         }
-        setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
-        setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
+        setAnswers([...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
         console.log(answers)
-        console.log(totalAnswers)
-        if(int === items.items.length-1){
-            setAnswers(answers => [...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
+        setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [[...answers, {"text": `${items.items[int]}`, "response": `${selected}`}]]})
+        if(int === items.items.length){
+            setAnswers([...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
             setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
-            onScore(answers)
+            console.log(answers)
+            console.log(totalAnswers)
+            onScore(totalAnswers)
             navigate('/results')
         }
-      }
-      
+    }
+    
+        console.log(answers)
+        console.log(totalAnswers)
+    //   console.log(items.items)
 
       return (
         <div className="Inventory">
