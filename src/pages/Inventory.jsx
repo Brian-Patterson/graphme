@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import {useParams} from 'react-router'
 import { useNavigate } from 'react-router-dom'
+import ScaledResponses from '../components/forms/ScaledResponses'
 
 
 const Inventory = ({onScore}) => {
@@ -21,6 +22,18 @@ const Inventory = ({onScore}) => {
           console.log(err);
         }
       };
+
+      const GetResults = async () => {
+        return fetch(`/results`, {
+            'method': 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(totalAnswers)
+        })
+        .then(response => response.json())
+        .catch(error => console.log(error))
+      }
     
       useEffect(() => {
         getItems()}, []);
@@ -36,28 +49,37 @@ const Inventory = ({onScore}) => {
             }
         }
         setAnswers([...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
-        console.log(answers)
         setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [[...answers, {"text": `${items.items[int]}`, "response": `${selected}`}]]})
         if(int === items.items.length){
             setAnswers([...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
             setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
-            console.log(answers)
-            console.log(totalAnswers)
             onScore(totalAnswers)
-            navigate('/results')
+            
         }
     }
-    
-        console.log(answers)
-        console.log(totalAnswers)
-    //   console.log(items.items)
 
+    const finalClick = () => {
+        // setAnswers([...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
+        // setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
+        onScore(totalAnswers)
+        navigate('/results')
+    }
+    
+        console.log(totalAnswers)
+    
+    {if(int === items.items?.length){
+        return (
+            <>
+            <button onClick={finalClick}>GET GRAPHTED</button>
+            </>
+        )} else {
       return (
         <div className="Inventory">
             <h3>{items.inventory}</h3>
             {items.items ? (
                 <div>
                     <p>{items.items[int]}</p>
+                  
                     <form onSubmit={handleSubmit}>
                         <input 
                             type='radio'
@@ -109,7 +131,7 @@ const Inventory = ({onScore}) => {
                             name='scaled-response'
                         />
                         <label for='strDisa'>Strongly Disagree</label> 
-                        <input type="submit" value="Next Question" />
+                        <input type="submit" value="Next Question" name='scaled-response'/>
                     </form>
                 </div>
                 
@@ -118,6 +140,7 @@ const Inventory = ({onScore}) => {
             )}
         </div>
       );
-}
+    }}}
+
 
 export default Inventory
