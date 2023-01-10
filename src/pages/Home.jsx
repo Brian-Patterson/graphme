@@ -10,7 +10,6 @@ const Home = (props) => {
       const response = await fetch("/inventories");
       const allInventories = await response.json();
       setQuestionaire(allInventories);
-      console.log(questionaire.inventories);
     } catch (err) {
       console.log(err);
     }
