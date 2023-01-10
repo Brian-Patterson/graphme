@@ -4,10 +4,8 @@ import React, {useState, useEffect} from 'react'
 function Results(score) {
     const [answers, setAnswers] = useState([score.score.facts[0]])
     const [inventory, setInventory] = useState([score.score.inventories[0]])
-
-    console.log(score)
-    console.log(answers)
-    console.log(inventory)
+    const [scoreKey, setScoreKey] = useState([])
+    const [scoreValue, setScoreValue] = useState([])
 
     const getScores = async () => {
         try{
@@ -18,7 +16,8 @@ function Results(score) {
             })
             const finalScores = await response.json()
             setAnswers(finalScores)
-            console.log(answers)
+            setScoreKey(Object.keys(finalScores.scoring.disc))
+            setScoreValue(Object.values(finalScores.scoring.disc))
         } catch (err) {
             console.log(err)
         }
@@ -27,8 +26,24 @@ function Results(score) {
     useEffect (() => {
         getScores()}, [])
 
+    console.log(scoreValue)
+    
+    
+
   return (
     <div>
+        {scoreKey? (
+            scoreKey?.map((score, idx) => 
+                <p key={idx}>{score}</p>
+        )) : <p>Loading...</p>}
+        {scoreValue? (
+            scoreValue?.map((score, idx) => 
+                <p key={idx}>{score.confidence}
+                {score.confidence_text}
+                {score.quantile}
+                {score.score}</p>
+        )) : <p>Loading...</p>}
+        
         <h2>Results: </h2>
     </div>
   )

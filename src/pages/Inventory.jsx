@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {useParams} from 'react-router'
 import { useNavigate } from 'react-router-dom'
 import ScaledResponses from '../components/forms/ScaledResponses'
@@ -22,18 +22,6 @@ const Inventory = ({onScore}) => {
           console.log(err);
         }
       };
-
-      const GetResults = async () => {
-        return fetch(`/results`, {
-            'method': 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(totalAnswers)
-        })
-        .then(response => response.json())
-        .catch(error => console.log(error))
-      }
     
       useEffect(() => {
         getItems()}, []);
@@ -59,8 +47,6 @@ const Inventory = ({onScore}) => {
     }
 
     const finalClick = () => {
-        // setAnswers([...answers, {"text": `${items.items[int]}`, "response": `${selected}`}])
-        // setTotalAnswers({"inventories": [`${items.inventory}`], "facts": [answers]})
         onScore(totalAnswers)
         navigate('/results')
     }
@@ -88,49 +74,49 @@ const Inventory = ({onScore}) => {
                             name='scaled-response'
                             required
                         />
-                        <label for="strArg">Strongly Agree</label>
+                        <label htmlFor="strArg">Strongly Agree</label>
                         <input 
                             type='radio'
                             id='agr'
                             value='agree'
                             name='scaled-response'
                         />
-                        <label for="Agr">Agree</label>
+                        <label htmlFor="Agr">Agree</label>
                         <input 
                             type='radio'
                             id='sliAgr'
                             value='slightly agree'
                             name='scaled-response'
                         />
-                        <label for='sliAgr'>Slightly Agree</label>
+                        <label htmlFor='sliAgr'>Slightly Agree</label>
                         <input 
                             type='radio'
                             id='neut'
                             value='neutral'
                             name='scaled-response'
                         />
-                        <label for='neut'>Neutral</label>
+                        <label htmlFor='neut'>Neutral</label>
                         <input 
                             type='radio'
                             id='sliDisa'
                             value='slightly disagree'
                             name='scaled-response'
                         />
-                        <label for='sliDisa'>Slightly Disagree</label>
+                        <label htmlFor='sliDisa'>Slightly Disagree</label>
                         <input 
                             type='radio'
                             id='disa'
                             value='disagree'
                             name='scaled-response'
                         />
-                        <label for='disa'>Disagree</label>
+                        <label htmlFor='disa'>Disagree</label>
                         <input 
                             type='radio'
                             id='strDisa'
                             value='strongly disagree'
                             name='scaled-response'
                         />
-                        <label for='strDisa'>Strongly Disagree</label> 
+                        <label htmlFor='strDisa'>Strongly Disagree</label> 
                         <input type="submit" value="Next Question" name='scaled-response'/>
                     </form>
                 </div>
